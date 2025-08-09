@@ -1,10 +1,10 @@
-
 # Dependencies
 /node_modules
 
 # Sensitive information
 .env
 serviceAccountKey.json
+rota1-d40e4-firebase-adminsdk-fbsvc-85b551fde2.json
 
 # IDE configuration files
 .idea/
