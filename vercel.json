@@ -2,14 +2,14 @@
   "buildCommand": "npm run build",
   "outputDirectory": "public",
   "functions": {
-    "server.js": {
-      "runtime": "node@18.x"
+    "api/server.js": {
+      "runtime": "nodejs18.x"
     }
   },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/server.js"
+      "dest": "/api/server.js"
     },
     {
       "src": "/(.*)",
