@@ -1,3 +1,4 @@
+
 # Dependencies
 /node_modules
 
@@ -25,3 +26,6 @@ desktop.ini
 
 # Custom additions
 ekler/
+add_markets_script.js
+driver_update.json
+icindeki/
