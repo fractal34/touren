@@ -35,8 +35,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Sunucuda beklenmedik bir hata oluştu.", error: err.message });
 });
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Sunucu http://localhost:${PORT} adresinde başlatıldı.`);
-});
+module.exports = app;

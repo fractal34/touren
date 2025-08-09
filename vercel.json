@@ -1,6 +1,4 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "public",
   "functions": {
     "api/server.js": {
       "runtime": "nodejs18.x"
@@ -10,10 +8,6 @@
     {
       "src": "/api/(.*)",
       "dest": "/api/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
     }
   ]
 }
