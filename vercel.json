@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/server.js": {
-      "runtime": "nodejs@18.20.2"
-    }
-  },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/server.js" }
   ]
