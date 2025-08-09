@@ -1,0 +1,50 @@
+1️⃣ serverless-http kur
+Terminalde:
+
+bash
+Kopyala
+Düzenle
+npm install serverless-http
+2️⃣ api/server.js içeriği
+js
+Kopyala
+Düzenle
+const express = require("express");
+const serverless = require("serverless-http");
+
+const app = express();
+
+app.get("/api", (req, res) => {
+  res.json({ message: "Merhaba Vercel Express!" });
+});
+
+// Tüm Express rotalarını buraya ekleyebilirsin
+app.get("/api/test", (req, res) => {
+  res.json({ test: true });
+});
+
+// Express uygulamasını serverless fonksiyon olarak dışa aktar
+module.exports = app;
+module.exports.handler = serverless(app);
+3️⃣ vercel.json
+json
+Kopyala
+Düzenle
+{
+  "functions": {
+    "api/server.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/server.js" }
+  ]
+}
+4️⃣ Çalışma Mantığı
+app.listen olmayacak (Vercel bunu yönetir).
+
+Her API isteğinde Vercel Express’i ayağa kaldırır, yanıt verir, kapatır.
+
+api/ klasörü zorunlu.
+
+serverless-http olmasa, Vercel Express app’i tanımaz.

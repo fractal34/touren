@@ -1,1 +1,0 @@
-// Bu dosya artık boş. Tüm kodlar js/route/route_core.js, js/route/route_ui.js, js/route/tour_plan.js ve js/route/tour_archive.js dosyalarına taşındı.

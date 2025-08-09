@@ -1,1 +1,0 @@
-// Bu dosya artık boş. Tüm kodlar js/data/data_loader.js, js/driver/driver_management.js, js/market/market_management.js, js/market/market_editor.js ve js/custom_fields/custom_field_management.js dosyalarına taşındı.
