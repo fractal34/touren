@@ -16,7 +16,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Gelen JSON body'lerini parse etmek için
 
-app.use(express.static(__dirname));
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/drivers', driverRoutes);
