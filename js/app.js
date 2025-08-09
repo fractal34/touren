@@ -1,0 +1,1 @@
+// Bu dosya artık boş. Tüm kodlar js/auth.js, js/route_management.js ve js/data_and_entity_management.js dosyalarına taşındı.

@@ -1,0 +1,34 @@
+market ekleme işlemi
+bana bir market ekleme scripti yazmıştın. bu scripte owner id bölümü de ekler misin? yani ben istediğim kullanıcının icine atabileyim marketleri. yada hangi kullanıcı aktifse ona mı ekleniyor? node add_markets_script.js scriptin ismi
+
+Haklısınız, add_markets_script.js betiğinin güncel kullanımını
+  konuşmamıştık.
+
+  Son yaptığımız değişiklikle, ownerId'yi komut satırı argümanı
+  olarak zorunlu hale getirdik. Yani, betiği çalıştırırken hangi
+  kullanıcının ownerId'sine market eklemek istediğinizi belirtmeniz
+  gerekiyor.
+
+  Kullanım Şekli:
+
+  Terminalinizde (komut istemcisi veya PowerShell) navi4 dizininde
+  olduğunuzdan emin olun ve aşağıdaki komutu çalıştırın:
+
+   1 node add_markets_script.js <owner_id_buraya>
+
+  Burada <owner_id_buraya> kısmına, marketleri eklemek istediğiniz
+  kullanıcının Firebase UID'sini (User ID) yazmanız gerekiyor.
+
+  Örnek:
+
+  Eğer marketleri jQZSzzGVTKd4CVW379nFFox5INf2 UID'sine sahip
+  kullanıcıya eklemek istiyorsanız, komut şöyle olacaktır:
+
+   1 node add_markets_script.js jQZSzzGVTKd4CVW379nFFox5INf2
+
+  Komutu çalıştırdıktan sonra, betik sizden market adı ve şehir
+  bilgisi isteyecektir. Girişi bitirmek için market adı olarak bitti
+  yazmanız yeterlidir.
+
+  Bu şekilde, eklediğiniz marketler belirttiğiniz ownerId'ye sahip
+  kullanıcıya atanacaktır.

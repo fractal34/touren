@@ -1,0 +1,61 @@
+YAPILANLAR
+
+   1. `.gitignore` Dosyası Oluşturuldu:
+       * Ne Yaptık? Projenin ana dizinine .gitignore adında bir dosya
+         ekledik.
+       * Neden Önemli? Bu dosya, node_modules gibi gereksiz dosyaların
+         ve en önemlisi serviceAccountKey.json ile .env gibi hassas
+         bilgileri içeren dosyaların Git gibi versiyon kontrol
+         sistemlerine gönderilmesini engeller. Bu, API anahtarlarınızın
+         ve sunucu kimlik bilgilerinizin yanlışlıkla herkese açık hale
+         gelmesini önleyen en temel ve kritik adımdır.
+
+   2. `.env` Dosyası ile Hassas Bilgiler Merkezileştirildi:
+       * Ne Yaptık? Projenin ana dizininde bir .env dosyası oluşturduk.
+         HERE_API_KEY'inizi ve serviceAccountKey.json dosyasının tüm
+         içeriğini bu dosyanın içine taşıdık.
+       * Neden Önemli? Bu yöntem, tüm hassas verileri kod tabanının
+         dışına çıkarır. Böylece, kodunuzu paylaşırken veya açık kaynaklı
+          hale getirirken kimlik bilgilerinizi sızdırma riskiniz ortadan
+         kalkar. Sunucu, bu dosyadan ihtiyaç duyduğu gizli bilgilere
+         güvenli bir şekilde erişir.
+
+   3. Sunucu Tarafında `dotenv` Kullanımı:
+       * Ne Yaptık? dotenv paketini projemize ekledik ve server.js
+         dosyasında require('dotenv').config() komutunu kullanarak .env
+         dosyasındaki değişkenleri sunucunun ortam değişkenlerine
+         (environment variables) yükledik.
+       * Neden Önemli? Bu, sunucunun .env dosyasındaki HERE_API_KEY ve
+         FIREBASE_SERVICE_ACCOUNT gibi değişkenlere
+         process.env.DEGISKEN_ADI formatında güvenli bir şekilde
+         erişmesini sağlar.
+
+   4. API Anahtarlarının Ön Yüzden (Frontend) Kaldırılması:
+       * Ne Yaptık? index.html ve js/auth.js gibi istemci tarafı
+         dosyalara doğrudan yazılmış olan tüm API anahtarlarını sildik.
+       * Neden Önemli? API anahtarlarını istemci tarafı kodunda bırakmak,
+         web sitenizi ziyaret eden herhangi birinin bu anahtarları
+         tarayıcının geliştirici araçlarıyla görmesine olanak tanır. Bu,
+         anahtarlarınızın kötüye kullanılmasına (örneğin, başka birinin
+         sizin kotanızdan harcama yapmasına) yol açabilir.
+
+
+   5. Güvenli API Uç Noktası (Endpoint) Oluşturulması:
+       * Ne Yaptık? server.js içinde /api/config adında yeni bir API uç
+         noktası oluşturduk. Bu uç nokta, ön yüzün (frontend) ihtiyaç
+         duyduğu HERE_API_KEY'i güvenli bir şekilde sağlar.
+       * Neden Önemli? Ön yüz, artık API anahtarını doğrudan bilmek
+         yerine, ihtiyaç duyduğunda sunucudan talep eder. Bu, anahtarın
+         tarayıcıda görünürlüğünü en aza indirir ve anahtar yönetimini
+         merkezileştirir.
+
+   6. Gereksiz `serviceAccountKey.json` Dosyasının Silinmesi:
+       * Ne Yaptık? İçeriğini güvenli bir şekilde .env dosyasına
+         taşıdıktan sonra, projedeki serviceAccountKey.json dosyasını
+         tamamen sildik.
+       * Neden Önemli? Bu, projenizde artık güvensiz bir kimlik bilgisi
+         dosyasının bulunmadığından emin olmamızı sağlar ve proje
+         yapısını temizler.
+
+  Bu adımlar sayesinde projenizin güvenlik duruşu önemli ölçüde
+  güçlenmiştir.

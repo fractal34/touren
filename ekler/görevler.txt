@@ -1,0 +1,72 @@
+server.js Dosyasını Küçültme Yol Haritası
+
+  Amacımız, server.js dosyasındaki farklı sorumlulukları ayrı
+  dosyalara bölerek ana dosyanın daha kısa ve odaklanmış olmasını
+  sağlamaktır.
+
+  Planın Adımları:
+
+   1. Dizin Yapısı Oluşturma:
+       * Projenizin ana dizininde src adında yeni bir dizin
+         oluşturacağız.
+       * src altında config, utils ve routes adında alt dizinler
+         oluşturacağız.
+           * src/config: Uygulama yapılandırması ve veritabanı
+             bağlantıları gibi ayarları içerecek.
+           * src/utils: Yardımcı fonksiyonları (coğrafi hesaplamalar,
+             TSP çözücü vb.) içerecek.
+           * src/routes: Her bir API kaynağı (şoförler, marketler,
+             rotalar vb.) için ayrı rota tanımlamalarını içerecek.
+
+   2. Firebase Yapılandırmasını Ayırma:
+       * src/config/firebase.js adında yeni bir dosya oluşturacağız.
+       * server.js içindeki Firebase Admin SDK başlatma kodunu ve db
+         nesnesinin dışa aktarımını bu dosyaya taşıyacağız.
+       * server.js ve diğer ilgili dosyalarda db nesnesini bu yeni
+         dosyadan içe aktaracağız.
+
+   3. Yardımcı Fonksiyonları Ayırma:
+       * src/utils/geoHelpers.js adında bir dosya oluşturup
+         geocodeAddress ve calculateHaversineDistance fonksiyonlarını
+         buraya taşıyacağız.
+       * src/utils/tspSolver.js adında bir dosya oluşturup
+         solveTSPForTruck fonksiyonunu buraya taşıyacağız.
+       * Bu fonksiyonları ilgili rota dosyalarında içe aktaracağız.
+
+   4. API Rotalarını Modüllere Ayırma:
+       * Her bir ana API kaynağı için src/routes dizini altında ayrı bir
+         JavaScript dosyası oluşturacağız:
+           * src/routes/auth.js (Giriş işlemleri)
+           * src/routes/drivers.js (Şoför yönetimi)
+           * src/routes/markets.js (Market yönetimi)
+           * src/routes/customFields.js (Özel alan yönetimi)
+           * src/routes/routing.js (Rota optimizasyonu ve detaylı rota)
+           * src/routes/seed.js (Market verisi ekleme - seed-markets)
+       * Her bir rota dosyasında, ilgili app.get, app.post, app.put,
+         app.delete tanımlamalarını express.Router() kullanarak
+         tanımlayacağız ve bu router'ı dışa aktaracağız.
+       * Her modül, kendi içinde ihtiyaç duyduğu db nesnesini, yardımcı
+         fonksiyonları ve HERE_API_KEY gibi değişkenleri içe aktaracak.
+
+   5. server.js Dosyasını Güncelleme:
+       * server.js dosyasında, oluşturduğumuz tüm rota modüllerini içe
+         aktaracağız.
+       * Her bir rota modülünü app.use('/api/drivers', driverRouter);
+         gibi ifadelerle Express uygulamasına bağlayacağız.
+       * server.js dosyasında sadece Express uygulamasının başlatılması,
+         genel middleware'ler (cors, json), hata yönetimi ve sunucunun
+         dinlemeye başlaması gibi temel yapılandırmalar kalacak.
+
+
+  Bu Planın Faydaları:
+
+   * Daha Küçük Dosyalar: server.js dosyasının boyutu önemli ölçüde
+     azalacak.
+   * Daha İyi Organizasyon: Kod, mantıksal olarak ayrılmış modüllere
+     bölünecek, bu da belirli bir özelliği bulmayı ve üzerinde
+     çalışmayı kolaylaştıracak.
+   * Daha Kolay Bakım: Her modül kendi sorumluluğuna odaklandığı için,
+     bir değişiklik yaparken diğer kısımları etkileme riski azalacak.
+   * Yeniden Kullanılabilirlik: Yardımcı fonksiyonlar ve rota mantığı
+     ayrı modüllerde olduğu için, gelecekte başka projelerde veya
+     uygulamanın farklı yerlerinde yeniden kullanılabilir hale gelecek.

@@ -1,0 +1,23 @@
+<div id="settings-view" class="d-none">
+    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+        <h4>Ayarlar</h4>
+        <div>
+            <button id="save-settings-button" class="btn btn-sm btn-success me-2">Kaydet</button>
+            <button id="back-from-settings-button" class="btn btn-sm btn-outline-secondary">Geri Dön</button>
+        </div>
+    </div>
+    <div id="settings-notification" class="alert mt-3" style="display: none;"></div>
+    <div class="settings-content">
+        <form id="user-profile-settings-form">
+            <h5 class="mb-3">Profil Bilgileri</h5>
+            <div class="mb-3">
+                <label for="settings-email" class="form-label">E-posta Adresi</label>
+                <input type="email" class="form-control" id="settings-email" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="settings-name" class="form-label">Kullanıcı Adı / Şirket</label>
+                <input type="text" class="form-control" id="settings-name" required>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+
+# Dependencies
+/node_modules
+
+# Sensitive information
+.env
+serviceAccountKey.json
+
+# IDE configuration files
+.idea/
+.vscode/
+
+# Build output
+/dist
+/build
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini

@@ -1,0 +1,14 @@
+favicon.ico:1  GET http://localhost:3000/favicon.ico 404 (Not Found)
+auth.js?v=1.2:394 Oturum aktif, uygulama başlatılıyor...
+data_loader.js?v=1.2:58 Tüm başlangıç verileri başarıyla yüklendi.
+auth.js?v=1.2:229 Prev button event listener added.
+auth.js?v=1.2:236 Next button event listener added.
+tour_archive.js?v=1.2:47  GET http://localhost:3000/api/routing/routes/REOcgHynmFvJtCp2m8N6 401 (Unauthorized)
+showRouteInPreview @ tour_archive.js?v=1.2:47
+handlePreviewRoute @ tour_archive.js?v=1.2:223
+tour_archive.js?v=1.2:149 Rota önizleme hatası: Error: Rota bilgileri yüklenemedi.
+    at showRouteInPreview (tour_archive.js?v=1.2:49:19)
+    at async HTMLButtonElement.handlePreviewRoute (tour_archive.js?v=1.2:223:5)
+showRouteInPreview @ tour_archive.js?v=1.2:149
+await in showRouteInPreview
+handlePreviewRoute @ tour_archive.js?v=1.2:223

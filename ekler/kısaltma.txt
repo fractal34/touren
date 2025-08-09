@@ -1,0 +1,248 @@
+ 1. `js/auth.js` (Kimlik Doğrulama ve Temel Uygulama Başlatma)
+   * İçerik:
+       * DOMContentLoaded olay dinleyicisi ve içindeki tüm global
+         değişken tanımlamaları (HERE API anahtarı, platform, map, ui,
+         allMarkets, allDrivers, allSavedRoutes, allCities,
+         globalCustomFields vb.).
+       * DOM element referansları (loginContainer, appContainer vb.).
+       * Kimlik doğrulama ile ilgili tüm fonksiyonlar: loadAuthViews,
+         showLoginView, showRegisterView, handleRegister, handleLogin,
+         handleLogout.
+       * Uygulamanın ana arayüzünü başlatan ve Split.js panellerini,
+         ana haritayı ve ilk veri yüklemelerini (loadInitialData,
+         loadSavedRoutes, loadGlobalCustomFields, loadAllCities,
+         populateStartEndLocations, addEventListeners) içeren
+         initializeApp fonksiyonu.
+       * Ayarlar görünümü ve ilgili fonksiyonlar: showSettingsView,
+         handleSaveSettings.
+       * Genel bildirim fonksiyonu: showNotification.
+
+  2. `js/route_management.js` (Rota Oluşturma, Optimizasyon ve Tur
+  Arşivi)
+   * İçerik:
+       * Rota oluşturma formunun doldurulması ve yönetimi:
+         populateStartEndLocations.
+       * Market arama ve seçimi: displayFilteredMarkets,
+         handleCitySearch, handleMarketNameSearch,
+         handleAddSelectedMarkets.
+       * Seçilen marketlerin listelenmesi ve palet/kilo girişleri:
+         renderFinalMarketList, addFinalListListeners,
+         handlePalletChange, handleRemoveFinalMarket.
+       * Toplam palet, kilo ve kapasite hesaplamaları: updateTotals,
+         updateTourPlanTotals.
+       * Market listesinin sürükle-bırak ile sıralanması:
+         activateSorting.
+       * Rota oluşturma ve güncelleme ana mantığı:
+         handleCreateOrUpdateRoute (HERE API çağrıları, harita çizimi,
+         rota kaydetme).
+       * Tur planı tablosunun güncellenmesi: updateTourPlan.
+       * Tur arşivi yönetimi: showTourArchiveView, showArchiveMainView,
+         createRouteListItem, renderTourPreviewModal (eğer varsa).
+       * Rota oluşturma görünüm geçişleri:
+         showRouteCreationFormContent, hideRouteCreationFormContent,
+         resetRouteCreationFormContent.
+
+
+  3. `js/data_and_entity_management.js` (Sürücü ve Market Yönetimi)
+   * İçerik:
+       * Başlangıç verilerini yükleme: loadInitialData (sadece market
+         ve sürücü yükleme kısımları).
+       * Sürücü yönetimi: loadDrivers, resetDriverForm,
+         handleEditDriver, populateDriverForm, handleAddDriver,
+         handleDriverSelection, handleDeleteDriver.
+       * Market yönetimi (listeleme, arama, düzenleme, silme):
+         showMarketSearchArea, handleListMarketsByCity,
+         loadMarketsForManagement, renderMarketsForManagement,
+         handleMarketNameSuggestionSearch,
+         handleMarketManagementSearch.
+       * Global özel alan yönetimi: loadGlobalCustomFields,
+         handleAddGlobalCustomField, showGlobalFieldManagementSection,
+         hideGlobalFieldManagementSection, handleEditGlobalCustomField,
+          handleDeleteGlobalCustomField.
+       * Market düzenleyici formu ve harita entegrasyonu:
+         populateMarketEditor, addMarketEditorMarker,
+         handleMarketEditorAddressSearch, handleMapTap,
+         selectMarketEditorAddress.
+       * Yeni market ekleme ve kaydetme: handleAddNewMarketClick,
+         handleSaveMarket, handleDeleteMarket.
+       * Şehir listesi yükleme ve arama: loadAllCities,
+         handleCitySearchInput.
+       * Genel görünüm geçişleri (sürücü ve market yönetimi ile ilgili
+         olanlar): showDriverManagementView, showMarketManagementView,
+         showPalletLoaderView, hideRightPanelViews, showMarketListView,
+          showMarketEditorView.
+
+  Uygulama Adımları:
+
+   1. Yeni dosyaları oluşturacağım: js/auth.js, js/route_management.js,
+      js/data_and_entity_management.js.
+   2. Belirlenen kod bloklarını ilgili dosyalara taşıyacağım.
+   3. index.html dosyasını, yeni JavaScript dosyalarını doğru sırada
+      içerecek şekilde güncelleyeceğim.
+   4. Dosyalar arası bağımlılıkları (özellikle global değişkenler ve
+      fonksiyon çağrıları) kontrol edip gerekli düzenlemeleri yapacağım.
+      Bu, bazı değişkenlerin veya fonksiyonların dışa aktarılmasını/içe
+      aktarılmasını gerektirebilir.
+
+Bu planı uyguladık dostum ve su anki durumumuz
+
+1. Rapor:
+
+  Yapılanlar:
+
+   1. `js/auth.js` oluşturuldu: Kimlik doğrulama (giriş, kayıt, çıkış)
+      ve temel uygulama başlatma (initializeApp) ile ilgili tüm
+      fonksiyonlar bu dosyaya taşındı.
+   2. `js/route_management.js` oluşturuldu: Rota oluşturma,
+      optimizasyon, tur planı güncelleme, market seçimi, palet/kilo
+      hesaplamaları ve tur arşivi yönetimi ile ilgili tüm fonksiyonlar
+      bu dosyaya taşındı.
+   3. `js/data_and_entity_management.js` oluşturuldu: Sürücü yönetimi,
+      market yönetimi (arama, düzenleme, silme), global özel alan
+      yönetimi ve market düzenleyici harita entegrasyonu ile ilgili tüm
+      fonksiyonlar bu dosyaya taşındı.
+   4. `js/utils.js` oluşturuldu: showNotification ve
+      getAddressFromCoords gibi genel yardımcı fonksiyonlar bu dosyaya
+      taşındı.
+   5. `index.html` güncellendi: Yeni oluşturulan js/utils.js,
+      js/auth.js, js/data_and_entity_management.js ve
+      js/route_management.js dosyaları, app.js yerine doğru sırada
+      index.html'e eklendi.
+   6. `js/app.js` temizlendi: Orijinal app.js dosyası boşaltıldı ve
+      artık sadece bir açıklama içeriyor.
+
+  Kalanlar ve Dikkat Edilmesi Gerekenler:
+
+   1. Global Değişken Yönetimi: app.js içinde tanımlı olan HERE_API_KEY,
+      platform, map, ui, allMarkets, selectedRouteMarkets, sortable,
+      sortableTourPlan, allDrivers, currentEditingDriverId,
+      loginContainer, loginViewWrapper, registerViewWrapper,
+      appContainer, allSavedRoutes, currentEditingRouteId, allCities,
+      globalCustomFields gibi global değişkenler şu anda farklı
+      dosyalarda kullanılıyor. Bu değişkenlerin modüller arası doğru bir
+      şekilde erişilebilirliğini sağlamak için (örneğin, window objesine
+      ekleyerek veya bir merkezi durum yönetimi deseni kullanarak) daha
+      fazla düzenleme gerekebilir. Şu anki haliyle, bazı fonksiyonlar
+      diğer dosyalardaki global değişkenlere doğrudan erişmeye
+      çalışabilir ve bu durum hatalara yol açabilir.
+
+   2. Bağımlılıkların İyileştirilmesi: Fonksiyonlar arası bağımlılıklar
+      (bir dosyadaki fonksiyonun diğer dosyadaki bir fonksiyonu
+      çağırması) şu an index.html'deki script yükleme sırasına bağlı.
+      Daha sağlam bir yapı için ES Modülleri (import/export)
+      kullanılarak bağımlılıkların açıkça belirtilmesi ve bir build
+      aracı (Webpack, Rollup vb.) ile birleştirilmesi ideal olacaktır.
+      Ancak bu, mevcut projenin kapsamını aşan bir değişiklik olabilir.
+   3. Hata Ayıklama ve Test: Kod bölme işlemi sırasında gözden kaçan
+      veya yanlış taşınan kısımlar olabilir. Uygulamanın tüm
+      fonksiyonlarının (giriş, kayıt, rota oluşturma, market/sürücü
+      yönetimi, tur arşivi vb.) detaylı bir şekilde test edilmesi
+      gerekmektedir.
+   4. `DOMContentLoaded` Kapsamı: app.js içindeki DOMContentLoaded olay
+      dinleyicisi, tüm uygulamanın başlatılmasından sorumluydu. Bu
+      dinleyici artık auth.js içinde yer alıyor ve diğer modüllerin
+      fonksiyonlarını çağırıyor. Bu yapının doğru çalıştığından emin
+      olmak önemlidir.
+
+  2. rapor
+
+Yapılanlar:
+
+   1. `js/app.js` dosyasının bölünmesi:
+       * js/auth.js: Kimlik doğrulama (giriş, kayıt, çıkış) ve temel
+         uygulama başlatma (initializeApp) ile ilgili fonksiyonlar
+         taşındı.
+       * js/utils.js: Genel yardımcı fonksiyonlar (showNotification,
+         getAddressFromCoords) taşındı.
+       * js/view_management.js: Genel görünüm geçiş fonksiyonları
+         (hideAllControlPanels, showMainPanelView,
+         showRouteCreationFormContent, hideRouteCreationFormContent,
+         showPalletLoaderView, hideRightPanelViews) taşındı.
+       * Orijinal js/app.js dosyası boşaltıldı.
+
+   2. `js/route_management.js` dosyasının bölünmesi:
+       * js/route/route_core.js: Rota oluşturma, güncelleme ve
+         optimizasyonun ana mantığı (handleCreateOrUpdateRoute,
+         handleUpdateRoute) taşındı.
+       * js/route/route_ui.js: Rota oluşturma formu ve market listesi
+         ile ilgili UI etkileşimleri (populateStartEndLocations,
+         displayFilteredMarkets, handleCitySearch,
+         handleMarketNameSearch, handleAddSelectedMarkets,
+         renderFinalMarketList, addFinalListListeners,
+         handlePalletChange, handleRemoveFinalMarket, updateTotals,
+         activateSorting, resetRouteCreationFormContent) taşındı.
+       * js/route/tour_plan.js: Tur planı tablosunun güncellenmesi ve
+         sıralanması (updateTourPlan, updateTourPlanTotals) taşındı.
+       * js/route/tour_archive.js: Kaydedilmiş rotaların yönetimi ve
+         arşiv görünümü (showTourArchiveView, handlePreviewRoute,
+         loadSavedRoutes, renderSavedRoutes, createRouteListItem,
+         handleDeleteRoute, handleEditRoute, handleHashtagClick,
+         showArchiveMainView) taşındı.
+       * Orijinal js/route_management.js dosyası boşaltıldı.
+
+   3. `js/data_and_entity_management.js` dosyasının bölünmesi:
+       * js/data/data_loader.js: Uygulama başlangıcındaki veri yükleme
+         (loadInitialData) taşındı.
+       * js/driver/driver_management.js: Şoför yönetimi ile ilgili tüm
+         fonksiyonlar (loadDrivers, resetDriverForm, handleEditDriver,
+         populateDriverForm, handleAddDriver, handleDriverSelection,
+         handleDeleteDriver, showDriverManagementView) taşındı.
+       * js/market/market_management.js: Market listeleme, arama,
+         kaydetme ve silme (loadAllCities, handleCitySearchInput,
+         showMarketSearchArea, handleListMarketsByCity,
+         loadMarketsForManagement, renderMarketsForManagement,
+         handleMarketNameSuggestionSearch,
+         handleMarketManagementSearch, handleAddNewMarketClick,
+         handleSaveMarket, handleDeleteMarket, showMarketListView)
+         taşındı.
+       * js/market/market_editor.js: Market düzenleyici formu ve harita
+         entegrasyonu (populateMarketEditor, addMarketEditorMarker,
+         handleMarketEditorAddressSearch, handleMapTap,
+         selectMarketEditorAddress, showMarketEditorView) taşındı.
+       * js/custom_fields/custom_field_management.js: Özel alanların
+         yönetimi (loadGlobalCustomFields, handleAddGlobalCustomField,
+         showGlobalFieldManagementSection,
+         hideGlobalFieldManagementSection, handleEditGlobalCustomField,
+         handleDeleteGlobalCustomField) taşındı.
+
+       * Orijinal js/data_and_entity_management.js dosyası boşaltıldı.
+
+
+   4. `index.html` güncellendi: Tüm yeni JavaScript dosyaları, doğru
+      bağımlılık sırasına göre index.html'e eklendi ve eski, büyük
+      dosyaların referansları kaldırıldı.
+
+  Kalanlar ve Dikkat Edilmesi Gerekenler:
+
+   1. Global Değişkenlerin Kapsamı: Şu anda birçok global değişken (map,
+      ui, allMarkets, selectedRouteMarkets, allDrivers,
+      currentEditingDriverId, allSavedRoutes, currentEditingRouteId,
+      allCities, globalCustomFields, marketEditorMap, marketEditorMarker,
+       sortable, sortableTourPlan, loginContainer, loginViewWrapper,
+      registerViewWrapper, appContainer, HERE_API_KEY, platform,
+      defaultLayers) hala global kapsamda tanımlı ve farklı modüller
+      tarafından doğrudan erişiliyor. Bu durum, kodun okunabilirliğini ve
+       bakımını zorlaştırabilir. Daha modern JavaScript geliştirme
+      yaklaşımlarında (ES Modülleri ile import/export kullanarak), bu
+      değişkenlerin her modülde ihtiyaç duyulduğu yerde içe aktarılması
+      veya merkezi bir durum yönetimi mekanizması kullanılması tercih
+      edilir. Mevcut durumda, bu değişkenlerin global olarak kalması,
+      projenin mevcut yapısına uyum sağlamak içindir.
+
+   2. Fonksiyon Bağımlılıkları: Fonksiyonlar arası çağrılar (örneğin,
+      route_core.js içindeki showNotification çağrısı) hala global
+      kapsamdaki fonksiyonlara dayanmaktadır. index.html'deki script
+      yükleme sırası bu bağımlılıkları yönetmek için kritik öneme
+      sahiptir. Sıralamanın bozulması, uygulamanın çalışmamasına neden
+      olabilir.
+   3. Test ve Doğrulama: Yapılan bu kapsamlı değişiklikler sonrasında,
+      uygulamanın tüm özelliklerinin (giriş, kayıt, rota oluşturma, rota
+       düzenleme, rota silme, market ekleme/düzenleme/silme, sürücü
+      ekleme/düzenleme/silme, tur arşivi, harita etkileşimleri,
+      palet/kilo hesaplamaları vb.) detaylı bir şekilde test edilmesi
+      gerekmektedir. Özellikle, kullanıcı arayüzü etkileşimleri ve
+      backend API çağrılarının doğru çalıştığından emin olunmalıdır.
+   4. Kod Tekrarı ve İyileştirmeler: Bazı yerlerde hala küçük miktarda
+      kod tekrarı veya daha fazla soyutlama potansiyeli olabilir. Ancak,
+      mevcut hedef, dosyaları daha küçük parçalara bölmek olduğundan, bu
+      tür iyileştirmeler sonraki aşamalara bırakılmıştır.
