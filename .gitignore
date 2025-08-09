@@ -1,4 +1,3 @@
-
 # Dependencies
 /node_modules
 
@@ -23,3 +22,6 @@ serviceAccountKey.json
 ehthumbs.db
 Thumbs.db
 desktop.ini
+
+# Custom additions
+ekler/
