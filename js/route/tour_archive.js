@@ -44,7 +44,7 @@ function showTourArchiveView() {
 
 async function showRouteInPreview(routeId) {
     try {
-        const response = await fetchWithAuth(`http://localhost:3000/api/routing/routes/${routeId}`);
+        const response = await fetchWithAuth(`/api/routing/routes/${routeId}`);
         if (!response.ok) {
             throw new Error('Rota bilgileri yüklenemedi.');
         }
@@ -312,7 +312,7 @@ async function handleDeleteRoute(event) {
 
     if (confirm('Bu rotayı kalıcı olarak silmek istediğinizden emin misiniz?')) {
         try {
-            const response = await fetch(`http://localhost:3000/api/routing/routes/${routeId}`, { method: 'DELETE' });
+            const response = await fetch(`/api/routing/routes/${routeId}`, { method: 'DELETE' });
             if (!response.ok) {
                 throw new Error('Rota silinemedi.');
             }
@@ -335,7 +335,7 @@ async function handleDeleteRoute(event) {
 async function handleEditRoute(event) {
     const routeId = event.currentTarget.dataset.id;
     try {
-        const response = await fetchWithAuth(`http://localhost:3000/api/routing/routes/${routeId}`);
+        const response = await fetchWithAuth(`/api/routing/routes/${routeId}`);
         if (!response.ok) {
             throw new Error('Rota bilgileri yüklenemedi.');
         }

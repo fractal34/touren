@@ -2,7 +2,7 @@
 
 async function loadCustomFields() {
     try {
-        const response = await fetchWithAuth('http://localhost:3000/api/custom-fields');
+        const response = await fetchWithAuth('/api/custom-fields');
         if (!response.ok) throw new Error('Özel alanlar yüklenemedi.');
         globalCustomFields = await response.json(); // globalCustomFields adı hala kullanılıyor, bu daha sonra refactor edilebilir.
     } catch (error) {
@@ -18,7 +18,7 @@ async function handleAddCustomField() {
     }
 
     try {
-        const response = await fetchWithAuth('http://localhost:3000/api/custom-fields', {
+        const response = await fetchWithAuth('/api/custom-fields', {
             method: 'POST',
             body: JSON.stringify({ label: newLabel.trim() })
         });
@@ -54,7 +54,7 @@ async function handleEditCustomField(event) {
     if (!newLabel || !newLabel.trim() || newLabel === currentLabel) return;
 
     try {
-        const response = await fetchWithAuth(`http://localhost:3000/api/custom-fields/${fieldId}`, {
+        const response = await fetchWithAuth(`/api/custom-fields/${fieldId}`, {
             method: 'PUT',
             body: JSON.stringify({ label: newLabel.trim() })
         });
@@ -77,7 +77,7 @@ async function handleDeleteCustomField(event) {
     const fieldId = event.target.dataset.id;
     if (confirm('Bu özel alanı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
         try {
-            const response = await fetchWithAuth(`http://localhost:3000/api/custom-fields/${fieldId}`, { method: 'DELETE' });
+            const response = await fetchWithAuth(`/api/custom-fields/${fieldId}`, { method: 'DELETE' });
             const result = await response.json();
             if (!response.ok) throw new Error(result.message || 'Özel alan silinemedi.');
             

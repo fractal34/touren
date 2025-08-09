@@ -180,8 +180,8 @@ async function handleSaveMarket() {
     };
 
     const url = currentEditingMarketId 
-        ? `http://localhost:3000/api/markets/${currentEditingMarketId}` 
-        : 'http://localhost:3000/api/markets';
+        ? `/api/markets/${currentEditingMarketId}` 
+        : '/api/markets';
     const method = currentEditingMarketId ? 'PUT' : 'POST';
 
     try {
@@ -208,7 +208,7 @@ async function handleDeleteMarket(marketId) {
 
     if (confirm('Bu marketi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
         try {
-            const response = await fetchWithAuth(`http://localhost:3000/api/markets/${marketId}`, { method: 'DELETE' });
+            const response = await fetchWithAuth(`/api/markets/${marketId}`, { method: 'DELETE' });
             const result = await response.json();
             if (!response.ok) throw new Error(result.message || 'Market silinemedi.');
             
@@ -326,7 +326,7 @@ async function handleExcelUpload() {
         messageDiv.classList.add('alert', 'alert-info');
         messageDiv.textContent = 'Dosya yükleniyor ve işleniyor...';
 
-        const response = await fetchWithAuth('http://localhost:3000/api/markets/upload-excel', {
+        const response = await fetchWithAuth('/api/markets/upload-excel', {
             method: 'POST',
             body: formData,
             // Content-Type başlığı FormData ile otomatik olarak ayarlanır

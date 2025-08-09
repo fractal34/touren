@@ -96,7 +96,7 @@ function updateTourPlan(optimizedSequence, driver, markets) {
                     return;
                 }
 
-                const response = await fetch(`http://localhost:3000/api/routing/routes/${routeId}/sequence`, {
+                const response = await fetch(`/api/routing/routes/${routeId}/sequence`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ stops: stops })

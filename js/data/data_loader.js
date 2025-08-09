@@ -25,11 +25,11 @@ async function loadInitialData() {
     try {
         // Tüm başlangıç verilerini paralel olarak yükle
         const [marketsRes, driversRes, citiesRes, routesRes, customFieldsRes] = await Promise.all([
-            fetchWithAuth('http://localhost:3000/api/markets'),
-            fetchWithAuth('http://localhost:3000/api/drivers'),
-            fetchWithAuth('http://localhost:3000/api/markets/cities'),
-            fetchWithAuth('http://localhost:3000/api/routing/routes'),
-            fetchWithAuth('http://localhost:3000/api/custom-fields')
+            fetchWithAuth('/api/markets'),
+            fetchWithAuth('/api/drivers'),
+            fetchWithAuth('/api/markets/cities'),
+            fetchWithAuth('/api/routing/routes'),
+            fetchWithAuth('/api/custom-fields')
         ]);
 
         if (!marketsRes.ok) throw new Error('Marketler yüklenemedi.');

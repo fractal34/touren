@@ -118,7 +118,7 @@ async function handleCreateOrUpdateRoute() {
                 })),
             };
 
-            const updateResponse = await fetchWithAuth(`http://localhost:3000/api/routing/routes/${currentEditingRouteId}`, {
+            const updateResponse = await fetchWithAuth(`/api/routing/routes/${currentEditingRouteId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -218,7 +218,7 @@ async function handleCreateOrUpdateRoute() {
 
     // Yeni rota oluşturma mantığı
     try {
-        const optimizeResponse = await fetch(`http://localhost:3000/api/routing/optimize-route`, {
+        const optimizeResponse = await fetch(`/api/routing/optimize-route`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -264,7 +264,7 @@ async function handleCreateOrUpdateRoute() {
             };
 
             // 2. ADIM: Optimize edilmiş sıralama ile detaylı rotayı al VE KAYDET
-            const detailedRouteResponse = await fetchWithAuth('http://localhost:3000/api/routing/detailed-route-and-save', {
+            const detailedRouteResponse = await fetchWithAuth('/api/routing/detailed-route-and-save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -422,7 +422,7 @@ async function handleUpdateRoute() {
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/api/routing/routes/${currentEditingRouteId}`, {
+        const response = await fetch(`/api/routing/routes/${currentEditingRouteId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedRouteData)

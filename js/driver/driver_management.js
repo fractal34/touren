@@ -68,7 +68,7 @@ async function handleAddDriver(event) {
     };
 
     try {
-        const response = await fetchWithAuth('http://localhost:3000/api/drivers', {
+        const response = await fetchWithAuth('/api/drivers', {
             method: 'POST',
             body: JSON.stringify(driverData)
         });
@@ -87,7 +87,7 @@ async function handleDeleteDriver(event) {
     const driverId = event.currentTarget.dataset.id;
     if (confirm('Bu şoförü silmek istediğinizden emin misiniz?')) {
         try {
-            const response = await fetchWithAuth(`http://localhost:3000/api/drivers/${driverId}`, { method: 'DELETE' });
+            const response = await fetchWithAuth(`/api/drivers/${driverId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Şoför silinemedi.');
             showNotification('Şoför başarıyla silindi.', 'success');
             await loadInitialData(); // Verileri yeniden yükle
