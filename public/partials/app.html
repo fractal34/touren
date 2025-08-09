@@ -1,0 +1,452 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm flex-shrink-0">
+             <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-truck-front-fill"></i> <span style="color: #B22222; font-weight: bold;">My</span><span style="color: white;">Touren</span>
+                    </a>
+                    <button id="show-driver-management-button" class="btn btn-sm btn-outline-light ms-2">Şoför Yönetimi</button>
+                    <button id="show-market-management-button" class="btn btn-sm btn-outline-light ms-2">Market Yönetimi</button>
+                    <button id="show-tour-archive-button" class="btn btn-sm btn-outline-info ms-2">Tur Arşivi</button>
+                    <button id="show-settings-button" class="btn btn-sm btn-outline-light ms-2">Ayarlar</button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="navbar-text me-3" id="welcome-message"></span>
+                    <button id="logout-button" class="btn btn-sm btn-outline-danger">Çıkış Yap</button>
+                </div>
+            </div>
+        </nav>
+
+        <main id="split-container" class="flex-grow-1">
+            <!-- KONTROL PANELİ -->
+            <div id="pane-controls" class="split-pane">
+    <div id="initial-route-view" class="d-flex flex-column align-items-center justify-content-start h-100 pt-3">
+        <button id="start-route-creation-button" class="btn btn-primary btn-lg">
+            <i class="bi bi-geo-alt-fill"></i> Yeni Rota Oluştur
+        </button>
+        <div class="mt-4 w-100">
+            <h5 class="border-bottom pb-2 mb-3">Bugünkü Turlar</h5>
+            <div id="today-routes-list" class="list-group mb-4">
+                <!-- Bugünkü turlar buraya dinamik olarak eklenecek -->
+                <p class="text-muted text-center">Bugün için kayıtlı tur bulunmamaktadır.</p>
+            </div>
+
+            <h5 class="border-bottom pb-2 mb-3">Dünkü Turlar</h5>
+            <div id="yesterday-routes-list" class="list-group">
+                <!-- Dünkü turlar buraya dinamik olarak eklenecek -->
+                <p class="text-muted text-center">Dün için kayıtlı tur bulunmamaktadır.</p>
+            </div>
+
+            <div class="d-grid mt-4">
+                <button id="show-all-routes-button" class="btn btn-outline-secondary">Tüm Geçmiş Turları Göster</button>
+            </div>
+        </div>
+    </div>
+    <div id="route-creation-form-content" class="d-none pb-4">
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+            <h4>Rota Oluşturma</h4>
+            <div>
+                <button id="back-to-initial-view-button" class="btn btn-sm btn-outline-secondary me-2">Geri Dön</button>
+                <button id="new-route-button" class="btn btn-sm btn-primary">Yeni Rota Oluştur</button>
+            </div>
+        </div>
+        <!-- Mevcut main-panel-view içeriği buraya gelecek -->
+        <div class="card card-body bg-light mb-4">
+            <div class="mb-3">
+                <label for="route-name" class="form-label fw-bold">Rota İsmi</label>
+                <input type="text" id="route-name" class="form-control" placeholder="Örn: Haftalık Batı Turu">
+            </div>
+            <div class="mb-3">
+                <label for="driver-select" class="form-label fw-bold">Şoför Seç</label>
+                <select id="driver-select" class="form-select">
+                    <option value="" selected>Şoför seçilmedi</option>
+                </select>
+            </div>
+        </div>
+        <div id="market-selection-area" class="card card-body bg-light mb-4">
+            <div class="mb-3">
+                <label for="city-search" class="form-label fw-bold">1. Şehir Adı ile Ara</label>
+                <input type="text" id="city-search" class="form-control" placeholder="Örn: Essen">
+                <div id="city-search-suggestions" class="list-group mt-1"></div>
+            </div>
+            <div class="mb-3">
+                <label for="market-name-search" class="form-label fw-bold">2. Market Adı ile Ara</label>
+                <input type="text" id="market-name-search" class="form-control" placeholder="Örn: Dünya Market">
+            </div>
+            <div id="city-based-markets" class="mb-3" style="max-height: 200px; overflow-y: auto;"></div>
+            <div class="d-grid">
+                <button id="add-selected-markets-button" class="btn btn-dark">Seçilen Marketleri Ekle</button>
+            </div>
+        </div>
+        <div id="pallet-entry-area" class="card card-body bg-light mt-4">
+            <h5 class="border-bottom pb-2 mb-3">Rota ve Palet Bilgileri</h5>
+            <ul id="final-market-list" class="list-group mb-3 border border-dark"></ul>
+        </div>
+        <div class="d-grid mt-4">
+            <button id="routeButton" class="btn btn-primary btn-lg"><i class="bi bi-geo-alt-fill"></i> Rota Oluştur</button>
+        </div>
+        <div id="notification" class="alert mt-3" style="display: none;"></div>
+        <div id="info-panel" class="card bg-dark text-white mt-4 p-3">
+            <h5 class="card-title border-bottom pb-2">Yük ve Rota Bilgileri</h5>
+            <p class="mb-1"><strong>Toplam Palet Sayısı:</strong> <span id="total-pallets">0</span></p>
+            <p class="mb-1"><strong>Toplam Euro Palet Ağırlığı:</strong> <span id="total-euro-kg">0</span> kg</p>
+            <p class="mb-1"><strong>Toplam Geniş Palet Ağırlığı:</strong> <span id="total-wide-kg">0</span> kg</p>
+            <p class="fs-5 mb-2"><strong>TOPLAM YÜK AĞIRLIĞI:</strong> <span id="total-weight" class="fw-bold">0</span> kg</p>
+            <hr class="bg-light">
+            <h6 class="mt-2">Kamyon Kapasitesi</h6>
+            <div class="progress" style="height: 25px; font-size: 1rem;">
+                <div id="capacity-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+            <p class="mb-1 text-center" id="capacity-text">Kullanılan Alan: 0 / 0</p>
+            <hr class="bg-light">
+            <p class="mb-1"><strong>Mesafe:</strong> <span id="distance">--</span> km</p>
+            <p class="mb-0"><strong>Süre:</strong> <span id="travel-time">--</span></p>
+        </div>
+
+        <!-- BAŞLANGIÇ/BİTİŞ VE TONAJ KONTROLLERİ -->
+        <div class="card card-body bg-light mb-4 mt-4">
+            <h5 class="mb-3">Rota Detayları</h5>
+            <div class="mb-3">
+                <label for="start" class="form-label fw-bold">Başlangıç Noktası</label>
+                <select id="start" class="form-select"></select>
+            </div>
+            <div class="mb-3">
+                <label for="end" class="form-label fw-bold">Bitiş Noktası</label>
+                <select id="end" class="form-select"></select>
+            </div>
+            <div class="mb-3">
+                <label for="weight" class="form-label">Kamyon Tonajı (kg)</label>
+                <input type="number" id="weight" class="form-control" value="0" min="0">
+            </div>
+            <div class="mb-3">
+                <label for="truck-pallet-capacity" class="form-label">Kamyon Palet Kapasitesi</label>
+                <input type="number" id="truck-pallet-capacity" class="form-control" value="0" min="0">
+            </div>
+        </div>
+
+        <!-- İki Çizgi Arasındaki Alt Bilgi -->
+        <div id="about-section" class="mt-4">
+            <hr>
+            <div class="text-center text-muted small py-2">
+                <p class="mb-1">© 2025 MyTouren</p>
+                <p class="mb-0"><a href="#" class="text-muted" onclick="event.preventDefault(); alert('Hakkımızda bölümü yakında eklenecektir.');">Hakkımızda</a></p>
+            </div>
+            <hr>
+        </div>
+
+        
+    </div>
+    <div id="driver-management-view" class="d-none">
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+            <h4>Şoför Yönetimi</h4>
+            <button id="back-to-main-button" class="btn btn-sm btn-outline-secondary">Geri Dön</button>
+        </div>
+        <form id="add-driver-form">
+            <h6>Yeni Şoför Ekle</h6>
+            <div class="mb-2"><input type="text" id="driver-name" class="form-control" placeholder="Şoför Adı" required></div>
+            <div class="mb-2"><input type="text" id="driver-plate" class="form-control" placeholder="Kamyon Plakası" required></div>
+            <div class="mb-2"><input type="number" id="driver-max-pallets" class="form-control" value="34" min="0" required placeholder="Maks. Palet Ağırlığı (kg)"></div>
+            <div class="mb-2"><input type="number" id="driver-pallet-capacity" class="form-control" value="20" min="0" required placeholder="Palet Kapasitesi (Yuva)"></div>
+            <div class="mb-2"><input type="text" id="driver-fixed-start" class="form-control" placeholder="Sabit Çıkış Adresi" required></div>
+            <div class="mb-2"><input type="text" id="driver-fixed-end" class="form-control" placeholder="Sabit Varış Adresi" required></div>
+            <div class="d-grid"><button type="submit" class="btn btn-success">Şoför Ekle</button></div>
+        </form>
+        <hr>
+        <h6>Mevcut Şoförler</h6>
+        <ul id="driver-list" class="list-group"></ul>
+    </div>
+
+    <div id="tour-archive-view" class="d-none">
+            <!-- Ana Arşiv Görünümü -->
+            <div id="archive-main-view">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                    <h4>Tur Arşivi</h4>
+                    <button id="back-to-main-from-archive-button" class="btn btn-sm btn-outline-secondary">Geri Dön</button>
+                </div>
+                <div id="archive-calendar-container" class="mb-2 d-flex justify-content-center"></div>
+                <h6 class="border-top pt-3">Seçilen Tarihteki Turlar</h6>
+                <div id="archive-routes-list" class="list-group"></div>
+            </div>
+
+            <!-- Filtrelenmiş Sonuçlar Görünümü (Başlangıçta Gizli) -->
+            <div id="archive-filtered-view" class="d-none">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                    <h4 id="filtered-archive-title">Filtrelenmiş Turlar</h4>
+                    <button id="back-to-archive-main-view-button" class="btn btn-sm btn-outline-secondary">Arşive Geri Dön</button>
+                </div>
+                <div id="filtered-archive-routes-list" class="list-group"></div>
+            </div>
+        </div>
+</div>
+
+    
+
+            <!-- HARİTA PANELİ -->
+            <div id="pane-map" class="split-pane" style="padding: 1rem;">
+                 <h4 class="border-bottom pb-2 mb-3">Harita Bölümü</h4>
+                <div class="h-100 w-100" id="map"></div>
+            </div>
+
+            <!-- TUR PLANI PANELİ -->
+            <div id="pane-pallets" class="split-pane">
+                <div id="tour-plan-view">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                        <h4 class="mb-0">Tur Planı</h4>
+                        <button id="print-tour-plan-button" class="btn btn-sm btn-primary"><i class="bi bi-printer-fill"></i> Yazdır</button>
+                    </div>
+
+                    <div id="tour-plan-printable-area" class="p-2">
+                        <!-- Başlık -->
+                        <div class="tour-plan-header text-center mb-3">
+                            <h2>Tur Planı</h2>
+                        </div>
+
+                        <!-- Tarih ve Şoför Bilgisi -->
+                        <div class="d-flex justify-content-between mb-3 fs-5">
+                            <span id="tour-plan-date"><strong>Tarih:</strong> --.--.----</span>
+                            <span id="tour-plan-driver"><strong>Şoför:</strong> --</span>
+                        </div>
+
+                        <!-- Ana Tablo -->
+                        <table class="table table-sm table-bordered text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="tour-plan-index-col">#</th>
+                                    <th>Müşteri No</th>
+                                    <th>Market / Şehir</th>
+                                    <th>Palet (E/G)</th>
+                                    <th>kg</th>
+                                    <th>Notlar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tour-plan-table-body">
+                                <!-- Rota verileri buraya dinamik olarak eklenecek -->
+                                <tr>
+                                    <td colspan="6" class="text-muted">Henüz bir rota oluşturulmadı.</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="table-light fw-bold">
+                                    <td colspan="3" class="text-end">Toplam:</td>
+                                    <td id="tour-plan-total-pallets">0</td>
+                                    <td id="tour-plan-total-kg">0</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- Özel Durumlar -->
+                        <div class="mt-4">
+                            <h5 class="fw-bold">Özel Durumlar / Notlar</h5>
+                            <div class="border p-2" style="min-height: 100px;">
+                                <div id="special-notes-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Yönetimi Görünümü (Gizli) -->
+                <div id="market-management-view" class="d-none" style="padding-bottom: 100px;">
+                    <!-- Market Listesi Görünümü -->
+                    <div id="market-list-view">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                            <h4>Market Yönetimi</h4>
+                            <button id="back-to-pallet-loader-button" class="btn btn-sm btn-outline-secondary">Geri Dön</button>
+                        </div>
+                        <div class="d-grid gap-2 mb-3">
+                            <button id="add-new-market-button" class="btn btn-success">Yeni Market Ekle</button>
+                            <button id="show-market-search-button" class="btn btn-primary">Market Bul</button>
+                            <button id="show-excel-upload-button" class="btn btn-warning">Excel'den İçe Aktar</button>
+                        </div>
+
+                        <div id="excel-upload-area" class="card card-body mb-3" style="display: none;">
+                            <h6>Excel'den Market Yükle</h6>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="excel-upload-input" accept=".xls,.xlsx">
+                                <button class="btn btn-primary" type="button" id="upload-excel-button">Yükle</button>
+                            </div>
+                            <div id="excel-upload-message" class="mt-2"></div>
+                        </div>
+
+                        
+
+                        <!-- Market Arama Alanı -->
+                        <div id="market-search-area" class="mb-3" style="display: none;">
+                            <div class="border p-3 rounded">
+                                <h6>Market Adına Göre Ara</h6>
+                                <div class="input-group mb-1">
+                                    <input type="text" id="market-management-search-input" class="form-control" placeholder="Market adı veya müşteri no...">
+                                    <button class="btn btn-outline-secondary" type="button" id="market-management-search-button"><i class="bi bi-search"></i> Ara</button>
+                                </div>
+                                <div id="market-name-suggestions-list" class="list-group"></div>
+                            </div>
+
+                            <div class="border p-3 rounded mt-3">
+                                <h6>Şehirdeki Marketleri Listele</h6>
+                                <div class="input-group">
+                                    <input type="text" id="market-list-by-city-input" class="form-control" placeholder="Şehir adı yazın...">
+                                    <button class="btn btn-outline-secondary" type="button" id="list-markets-by-city-button"><i class="bi bi-list-ul"></i> Listele</button>
+                                </div>
+                                <div id="city-suggestions-list" class="list-group mt-1"></div>
+                            </div>
+                        </div>
+
+                        <h6>Mevcut Marketler</h6>
+                        <ul id="market-management-list" class="list-group mb-3"></ul>
+
+                        <h6 class="mt-4">Son Eklenen 10 Market</h6>
+                        <ul id="latest-markets-list" class="list-group mb-3"></ul>
+                        
+                    </div>
+
+                    <!-- Market Düzenleme Formu Görünümü -->
+                    <div id="market-editor-view" class="d-none">
+                         <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                            <h5 id="market-editor-title">Market Düzenle</h5>
+                            <button id="back-to-market-list-button" class="btn btn-sm btn-outline-secondary">Listeye Geri Dön</button>
+                        </div>
+                        <form id="market-editor-form" class="card card-body">
+                            <div class="mb-2">
+                                <label class="form-label">Market Adı</label>
+                                <input type="text" id="market-editor-name" class="form-control">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Müşteri Numarası</label>
+                                <input type="text" id="market-editor-customer-number" class="form-control">
+                            </div>
+                            <p class="fw-bold mb-1 mt-2">Adres</p>
+                            <!-- Harita ve Arama Alanı -->
+                            <div class="mb-3">
+                                <div id="market-editor-map" style="height: 300px; width: 100%; border-radius: 5px; margin-bottom: 10px;"></div>
+                                <div class="input-group mb-2">
+                                    <input type="text" id="market-editor-address-search" class="form-control" placeholder="Adres veya yer adı ara...">
+                                    <button class="btn btn-outline-secondary" type="button" id="market-editor-search-button"><i class="bi bi-search"></i></button>
+                                </div>
+                                <div id="market-editor-search-results" class="list-group mb-2"></div>
+                                <button type="button" id="add-selected-address-to-form-button" class="btn btn-sm btn-primary w-100 mb-2 d-none">Seçilen Marketi Ekle</button>
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-8"><input type="text" id="market-editor-street" class="form-control" placeholder="Sokak" readonly></div>
+                                <div class="col-4"><input type="text" id="market-editor-street-number" class="form-control" placeholder="No" readonly></div>
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-4"><input type="text" id="market-editor-zip" class="form-control" placeholder="Posta Kodu" readonly></div>
+                                <div class="col-8"><input type="text" id="market-editor-city" class="form-control" placeholder="Şehir" readonly></div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Ülke</label>
+                                <input type="text" id="market-editor-country" class="form-control" value="Almanya" disabled readonly>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Notlar</label>
+                                <textarea id="market-editor-notes" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Özel Durumlar (Tur Planı için)</label>
+                                <textarea id="market-editor-special-notes" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Euro Palet Ağırlığı (kg)</label>
+                                <input type="number" id="market-editor-euro-pallet-kg" class="form-control" value="0" min="0">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Geniş Palet Ağırlığı (kg)</label>
+                                <input type="number" id="market-editor-wide-pallet-kg" class="form-control" value="0" min="0">
+                            </div>
+                            
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6>Özel Bölümler</h6>
+                                <button type="button" id="add-global-custom-field-button" class="btn btn-sm btn-outline-info">Yeni Genel Bölüm Ekle</button>
+                            </div>
+                            <div id="market-editor-custom-fields-container"></div>
+                            <hr>
+                            <div id="global-field-management-section" style="display: none;">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6>Genel Özel Bölüm Yönetimi</h6>
+                                    <button type="button" id="hide-global-field-management-button" class="btn btn-sm btn-outline-secondary">Kapat</button>
+                                </div>
+                                <ul id="global-custom-fields-list" class="list-group mb-3"></ul>
+                            </div>
+                            <div class="text-center mt-3">
+                                <button type="button" id="show-global-field-management-button" class="btn btn-sm btn-outline-secondary">Genel Bölümleri Yönet</button>
+                            </div>
+                        </form>
+                        <!-- Ana Kaydet/Sil Butonları -->
+                        <div class="card-footer text-center py-3 mt-3">
+                            <button type="button" id="save-market-button" class="btn btn-primary">Marketi Kaydet</button>
+                            <button type="button" id="delete-market-button" class="btn btn-danger ms-2">Marketi Sil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Tur Önizleme Modalı -->
+        <div class="modal fade" id="tourPreviewModal" tabindex="-1" aria-labelledby="tourPreviewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tourPreviewModalLabel">Tur Önizleme: <span id="preview-route-name"></span></h5>
+                        <div class="d-flex align-items-center ms-auto me-3">
+                            <button type="button" class="btn btn-sm btn-primary me-2" id="prev-tour-button" disabled><i class="bi bi-arrow-left"></i> Sonraki Tur</button>
+                            <button type="button" class="btn btn-sm btn-primary" id="next-tour-button" disabled>Önceki Tur <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="preview-tour-plan-printable-area" class="p-2">
+                            <!-- Başlık -->
+                            <div class="tour-plan-header text-center mb-3">
+                                <h2>Tur Planı</h2>
+                            </div>
+
+                            <!-- Tarih ve Şoför Bilgisi -->
+                            <div class="d-flex justify-content-between mb-3 fs-5">
+                                <span id="preview-tour-plan-date"><strong>Tarih:</strong> --.--.----</span>
+                                <span id="preview-tour-plan-driver"><strong>Şoför:</strong> --</span>
+                            </div>
+
+                            <!-- Ana Tablo -->
+                            <table class="table table-sm table-bordered text-center">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="tour-plan-index-col">#</th>
+                                        <th>Müşteri No</th>
+                                        <th>Market / Şehir</th>
+                                        <th>Palet (E/G)</th>
+                                        <th>kg</th>
+                                        <th>Notlar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="preview-tour-plan-table-body">
+                                    <!-- Rota verileri buraya dinamik olarak eklenecek -->
+                                    <tr>
+                                        <td colspan="6" class="text-muted">Henüz bir rota oluşturulmadı.</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-light fw-bold">
+                                        <td colspan="3" class="text-end">Toplam:</td>
+                                        <td id="preview-tour-plan-total-pallets">0</td>
+                                        <td id="preview-tour-plan-total-kg">0</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <!-- Özel Durumlar -->
+                            <div class="mt-4">
+                                <h5 class="fw-bold">Özel Durumlar / Notlar</h5>
+                                <div class="border p-2" style="min-height: 100px;">
+                                    <div id="preview-special-notes-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-primary" id="print-preview-tour-plan-button"><i class="bi bi-printer-fill"></i> Yazdır</button>
+                    </div>
+                </div>
+            </div>
+        </div>

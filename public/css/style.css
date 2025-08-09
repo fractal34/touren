@@ -1,0 +1,257 @@
+body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #f8f9fa;
+            overflow: hidden;
+        }
+        #login-view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        #app-container {
+            display: none;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #split-container {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+        }
+        .split-pane {
+            background-color: #fff;
+        }
+        #pane-controls, #pane-pallets {
+             padding: 1rem 1rem 3rem 1rem;
+             overflow-y: auto; /* Dikey kaydırma çubuğu eklendi */
+        }
+        #pane-map {
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        .gutter {
+            background-color: #eee;
+            background-repeat: no-repeat;
+            background-position: 50%;
+        }
+        .gutter.gutter-horizontal {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bM/5+BgYkBgYwBiFhYWIgimAhYiAIAVcsY2803V6EAAAAASUVORK5CYII=');
+            cursor: col-resize;
+        }
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            background: rgba(255, 255, 255, 0.85);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        #preloader-spinner {
+            border: 8px solid #f3f3f3; 
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Diğer stiller... */
+
+/* YENİ: Giriş Ekranı Stilleri */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Hafif bir arka plan rengi */
+}
+
+#login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Tüm ekran yüksekliğini kapla */
+    padding: 20px;
+}
+
+#login-view-wrapper {
+    width: 100%;
+    max-width: 400px; /* Formun maksimum genişliği */
+}
+
+#app-container {
+    display: none; /* Başlangıçta uygulama gizli */
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* YENİ: Tur Planı İçindeki Palet Tablosu Stilleri */
+.inner-pallet-table {
+    width: 100%;
+    border: none;
+    text-align: center;
+}
+
+.inner-pallet-table th,
+.inner-pallet-table td {
+    border: none;
+    padding: 2px;
+    font-size: 0.9em;
+    width: 30px; /* E ve G kutucukları için sabit genişlik */
+}
+
+.inner-pallet-table th {
+    font-weight: bold;
+    color: #6c757d; /* Bootstrap secondary text color */
+}
+
+        #tour-plan-printable-area {
+            font-family: 'Poppins', sans-serif; /* Yeni font eklendi */
+            color: #000;
+            background-color: #fff;
+            width: 640px; /* Yaklaşık A4 genişliği (210mm - 40mm marj) */
+            height: 970px; /* Yaklaşık A4 yüksekliği (297mm - 40mm marj) */
+            margin: 20px auto; /* Ortala ve üst/alt marj ekle */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Hafif gölge */
+            border: 1px solid #ddd; /* İnce kenarlık */
+            /* overflow: auto; İçerik taşarsa kaydırma çubuğu */ /* Kaydırma işlemi ana panel tarafından yönetilecek */
+        }
+        
+        .tour-plan-header h2 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+                #tour-plan-printable-area .table-bordered {
+            border: 1px solid #000 !important;
+            table-layout: fixed; /* Sütun genişliklerini sabitle */
+            width: 100%; /* Tablonun tam genişliği kullanmasını sağla */
+        }
+        #tour-plan-printable-area .table-bordered th,
+        #tour-plan-printable-area .table-bordered td {
+            border: 1px solid #000 !important;
+            vertical-align: middle;
+            padding: 0.3rem; /* Dolgu azaltıldı */
+            overflow: hidden; /* İçerik taşarsa gizle */
+            white-space: nowrap; /* Metni tek satırda tut */
+            text-overflow: ellipsis; /* İçerik taşarsa üç nokta göster */
+        }
+        /* Sıra numarası sütunu için sabit genişlik */
+        #tour-plan-printable-area .tour-plan-index-col {
+            width: 30px; /* Yaklaşık 2 karakter genişliği */
+        }
+        /* Müşteri No */
+        #tour-plan-printable-area .table-bordered th:nth-child(2),
+        #tour-plan-printable-area .table-bordered td:nth-child(2) {
+            width: 60px; /* Müşteri numarası için sabit genişlik */
+        }
+        /* Market / Şehir */
+        #tour-plan-printable-area .table-bordered th:nth-child(3),
+        #tour-plan-printable-area .table-bordered td:nth-child(3) {
+            width: 30%; /* Market / Şehir için yüzde genişlik */
+            white-space: normal; /* Metnin satır atlamasına izin ver */
+            word-wrap: break-word;
+        }
+        /* Palet */
+        #tour-plan-printable-area .table-bordered th:nth-child(4),
+        #tour-plan-printable-area .table-bordered td:nth-child(4) {
+            width: 60px; /* Palet için sabit genişlik (2 rakam sığacak) */
+        }
+        /* kg */
+        #tour-plan-printable-area .table-bordered th:nth-child(5),
+        #tour-plan-printable-area .table-bordered td:nth-child(5) {
+            width: 70px; /* kg için sabit genişlik (5 rakam sığacak) */
+        }
+        /* Notlar */
+        #tour-plan-printable-area .table-bordered th:nth-child(6),
+        #tour-plan-printable-area .table-bordered td:nth-child(6) {
+            width: auto; /* Kalan alanı doldur */
+            white-space: normal; /* Metnin satır atlamasına izin ver */
+            word-wrap: break-word;
+        }
+
+        /* Yazdırma Stilleri */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #tour-plan-printable-area, #tour-plan-printable-area * {
+                visibility: visible;
+            }
+            #tour-plan-printable-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+            }
+            .table {
+                font-size: 10pt; /* Yazdırma için font boyutunu küçült */
+            }
+            .table-sm td, .table-sm th {
+                padding: 0.2rem;
+            }
+            #print-tour-plan-button {
+                display: none;
+            }
+        }
+
+/* Market Yönetimi Listeleri Stilleri */
+#market-management-list .list-group-item {
+    background-color: #e9ecef; /* Açık gri tonu */
+}
+
+#city-based-markets .form-check-label,
+#market-name-search-results .form-check-label {
+    background-color: #e0f7fa; /* Açık camgöbeği */
+    padding: 8px;
+    margin-bottom: 2px; /* Bu, label'lar arasında boşluk bırakır */
+    border-radius: 4px;
+    display: block; /* Label'ın tüm alanı kaplamasını sağlar */
+    cursor: pointer; /* Tıklanabilir olduğunu belirtir */
+}
+
+/* Checkbox'ın kendisi için stil */
+#city-based-markets .form-check-input,
+#market-name-search-results .form-check-input {
+    margin-right: 8px; /* Checkbox ile yazı arasında boşluk */
+    vertical-align: middle; /* Dikey hizalama */
+}
+
+/* Tur Arşivi Takvim ve Çizgi Düzenlemeleri */
+#archive-calendar-container {
+    text-align: center; /* Takvimi ortalamak için */
+}
+
+#tour-archive-view h6.border-top {
+    margin-top: 1rem; /* Ayırma çizgisinin üstüne boşluk eklemek için */
+}
+
+.flatpickr-calendar {
+    margin: 0 auto; /* Takvimi yatayda ortala */
+}
+
+/* Tur Arşivi Listeleri için alt boşluk */
+#archive-routes-list,
+#filtered-archive-routes-list {
+    padding-bottom: 40px; /* Alt kısımda 40px boşluk bırak */
+}
+
+/* Yük ve Rota Bilgileri kutusu için yeni arka plan rengi */
+#info-panel {
+    background-color: #17243d !important;
+}
