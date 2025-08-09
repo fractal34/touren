@@ -4,10 +4,5 @@
       "source": "/api/(.*)",
       "destination": "/server.js"
     }
-  ],
-  "functions": {
-    "server.js": {
-      "runtime": "node@18.x"
-    }
-  }
+  ]
 }
